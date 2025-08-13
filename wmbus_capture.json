@@ -1,0 +1,93 @@
+{
+  "capture_timestamp": "2025-08-13T08:48:49.501006",
+  "discovered_devices": [
+    {
+      "name": "VW1871-250111",
+      "address": "F0F41E39-111C-1E4B-018D-4363539FF186"
+    }
+  ],
+  "total_frames": 9,
+  "frames": [
+    {
+      "timestamp": "2025-08-13T08:47:48.889946",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff01-0000-1000-8000-00805f9b34fb",
+      "data_length": 244,
+      "raw_hex": "FBFBFBF011012508DAE0916261AC0125442D2C703749741F168D20B9C22302213A4DE6FAFF5B137E9EB42FD8D7129B64074CA798A49DF2FEFE0E0FFBFBFBF011012508EAE0916261AC0125442D2C703749741F168D20BAC3230221B42C2B934BA29E6EB23033976253DE37EBB4C3DE3AF875FEFE0E0FFBFBFBF011012508FAE0916261AC0125442D2C703749741F168D20BBD0230221084FD7C5A29DF7805597038E05123AD89F0E2A9815DB08FEFE0E0FFBFBFBF0110125080AE1916261AC0125442D2C703749741F168D20BCD123022180DE1367CA63926FF2513E9DDA697779C8E23F2E125479FEFE0E0FFBFBFBF011012508",
+      "raw_ascii": "......%....ba..%D-,p7It... ..#.!:M...[.~../....d.L...............%....ba..%D-,p7It... ..#.!.,+.K..n.03.bS.7....:.u..........%....ba..%D-,p7It... ..#.!.O......U.....:...*..............%....ba..%D-,p7It... ..#.!...g.c.o.Q>..iwy..?..Ty..........%."
+    },
+    {
+      "timestamp": "2025-08-13T08:47:48.918940",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff01-0000-1000-8000-00805f9b34fb",
+      "data_length": 121,
+      "raw_hex": "1AE1916261AD0130442D2C703749741F168D20BDD223022192BA361C2662EBE15FEFCB3DC4EFCA0121D618B4048F034FC4A5B1A981C91F0A7575FEFE0E0FFBFBFBF0110125082AE1916261A80125442D2C703749741F168D20BED32302219F3045084A744D8ADFC28B6B460E3B43046ABB14973B75FEFE0E0F",
+      "raw_ascii": "...ba..0D-,p7It... ..#.!..6.&b.._..=....!......O........uu..........%.*..ba..%D-,p7It... ..#.!.0E.JtM....kF.;C.j...;u...."
+    },
+    {
+      "timestamp": "2025-08-13T08:47:48.947870",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff03-0000-1000-8000-00805f9b34fb",
+      "data_length": 2,
+      "raw_hex": "0107",
+      "raw_ascii": ".."
+    },
+    {
+      "timestamp": "2025-08-13T08:47:48.948034",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff03-0000-1000-8000-00805f9b34fb",
+      "data_length": 3,
+      "raw_hex": "02F400",
+      "raw_ascii": "..."
+    },
+    {
+      "timestamp": "2025-08-13T08:47:49.189700",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000fec8-0000-1000-8000-00805f9b34fb",
+      "data_length": 26,
+      "raw_hex": "FE01001A271100010A0018848004200128023A06606E41E3185F",
+      "raw_ascii": "....'......... .(.:.`nA.._"
+    },
+    {
+      "timestamp": "2025-08-13T08:47:55.142477",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "49535343-1e4d-4bd9-ba61-23c647249616",
+      "data_length": 36,
+      "raw_hex": "0D0A4261747465727920566F6C74203D2033383030206D560D0AFBFCFCF0D80EFEFE0E0F",
+      "raw_ascii": "..Battery Volt = 3800 mV............"
+    },
+    {
+      "timestamp": "2025-08-13T08:48:01.218235",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "49535343-1e4d-4bd9-ba61-23c647249616",
+      "data_length": 59,
+      "raw_hex": "FBFBFBF0110125083AE1916261A90125442D2C703749741F168D20BFE02302217294CC6EFBFF557FF26B294FB73FE9D05C62B05B4F8CC7FEFE0E0F",
+      "raw_ascii": "......%.:..ba..%D-,p7It... ..#.!r..n..U..k)O.?..\\b.[O......"
+    },
+    {
+      "timestamp": "2025-08-13T08:48:17.208955",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "49535343-1e4d-4bd9-ba61-23c647249616",
+      "data_length": 59,
+      "raw_hex": "FBFBFBF0110125084AE1916261A60125442D2C703749741F168D20C0E1230221D24F7A269016CE94263C61159EFCAE8F52A6E186999E9AFEFE0E0F",
+      "raw_ascii": "......%.J..ba..%D-,p7It... ..#.!.Oz&....&<a.....R.........."
+    },
+    {
+      "timestamp": "2025-08-13T08:48:49.219287",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "49535343-1e4d-4bd9-ba61-23c647249616",
+      "data_length": 59,
+      "raw_hex": "FBFBFBF0110125086AE1916261AC0125442D2C703749741F168D20C2E3230221E10833769BFEBA9B0847DD6DEE3B480B64081578349F77FEFE0E0F",
+      "raw_ascii": "......%.j..ba..%D-,p7It... ..#.!..3v.....G.m.;H.d..x4.w...."
+    }
+  ]
+}

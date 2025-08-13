@@ -1,0 +1,38 @@
+# FlowIQ2101 Telegram Pattern Analysis Results
+
+## Common Structure (Bytes 0-18)
+All telegrams share identical structure:
+- 25/30: Length field (37 or 48 bytes)  
+- 442D2C: Manufacturer code (KAM = Kamstrup)
+- 70374974: Meter ID (74493770 in little-endian)
+- 1F: Version
+- 168D20: ELL layer (Extended Link Layer)
+
+## Variable Fields Analysis
+
+### Byte 12 (ELL-ACC): Access Number
+- B4: Frame 4 (telegram 1)
+- B5: Frame 5 (telegram 2) 
+- B6: Frame 6 (telegram 3)
+- B7: Frame 7 (telegram 4)
+- BA: Original test telegram
+
+**Pattern**: Sequential access numbers (B4→B5→B6→B7), indicating consecutive transmissions
+
+### Bytes 13-16 (SN): Security/Sequence Number  
+- 231B0221: Frame 4
+- 301B0221: Frame 5 (longer telegram)
+- 311B0221: Frame 6
+- 321B0221: Frame 7
+- 811F0221: Original test
+
+**Pattern**: First byte increments (23→30→31→32), consistent with frame sequence
+
+### Bytes 17-18 (CRC): Payload CRC
+Different for each telegram due to different payload content
+
+### Key Insights
+1. **Consistent Header**: First 12 bytes identical across all telegrams
+2. **Sequential Transmission**: Access numbers and sequence numbers increment
+3. **Frame Length Variation**: Most are 37 bytes, one is 48 bytes (Frame 5)
+4. **Real Transmissions**: These appear to be legitimate consecutive FlowIQ2101 transmissions

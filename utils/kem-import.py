@@ -161,6 +161,8 @@ def print_meter(meterName,meterType,meterNum,meterSerial,meterVendor,meterConfig
         wmbusmeters_driver = 'multical603'
     elif (meterName == 'KWM2210'): 
         wmbusmeters_driver = 'flowiq2200'
+    elif (meterName == 'FLOWIQ 21XX'): 
+        wmbusmeters_driver = 'flowiq2101'
     else:
         wmbusmeters_driver = None
 

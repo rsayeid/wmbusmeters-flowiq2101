@@ -1,0 +1,35 @@
+# Analysis of captured frames from VW1871-250111
+# The frames seem to contain extra framing/protocol bytes
+
+# Original frame:
+# FBFBFBF011012508DCDF916261AD0125442D2C703749741F168D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CBFEFE0E0F
+
+# Breaking it down:
+# FBFBFBF0 - Possible preamble/sync bytes
+# 11 - Possible length byte (17 decimal)?
+# 01 - ?
+# 25 - Possible length byte (37 decimal)?
+# 08 - Control field?
+# DCDF916261AD01 - ?
+# 25 - Length again?
+# 442D2C - Manufacturer code (Kamstrup = 0x2C2D = 11309 decimal)
+# 703749 - Device ID part?
+# 741F16 - Serial number part?
+# 8D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CB - Data payload
+# FEFE0E0F - Possible end framing
+
+# Let me try different combinations to find the proper wM-Bus frame
+
+# Attempt 1: Starting from what looks like a proper wM-Bus header
+# Format: Length + C-Field + M-Field + A-Field + ...
+2508DCDF916261AD0125442D2C703749741F168D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CB
+
+# Attempt 2: Starting from the manufacturer code (more likely)
+442D2C703749741F168D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CB
+
+# Attempt 3: Starting from what might be length + fields
+25442D2C703749741F168D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CB
+
+# Attempt 4: Standard wM-Bus frame structure
+# Let's assume the frame starts at the control field and construct properly
+084025442D2C703749741F168D20B4231B02216F07DDD3EFA318553DDFEE5134DB3985C5DB84A7E6E8CB
