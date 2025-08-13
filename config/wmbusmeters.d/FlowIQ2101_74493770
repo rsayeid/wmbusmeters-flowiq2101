@@ -1,0 +1,5 @@
+# FlowIQ2101 meter configuration (includes added detection variant Version=0x1F DeviceType=0x16)
+name=FlowIQ2101_74493770
+driver=flowiq2101
+id=74493770
+key=44E9112D06BD762EC2BFECE57E487C9B

@@ -1,0 +1,17 @@
+2025-08-13 23:51:28,340 - INFO - 🌉 Starting Bluetooth to Serial Bridge
+2025-08-13 23:51:28,340 - INFO - ==================================================
+2025-08-13 23:51:28,341 - INFO - ✓ Created virtual serial port: /dev/ttys016
+2025-08-13 23:51:28,341 - INFO - Using virtual environment Python: /Volumes/dev/space/wmblatest/wmbusmeters/.venv/bin/python
+2025-08-13 23:51:28,341 - INFO - Starting bluetooth capture: /Volumes/dev/space/wmblatest/wmbusmeters/.venv/bin/python -u /Volumes/dev/space/wmblatest/wmbusmeters/bluetooth_wmbus_capture.py --bridge-mode
+2025-08-13 23:51:28,343 - INFO - ✓ Started Bluetooth capture process
+2025-08-13 23:51:28,343 - INFO - 🔄 Starting data bridge...
+2025-08-13 23:51:28,343 - INFO - 🚀 Bridge running!
+2025-08-13 23:51:28,343 - INFO - 📱 Bluetooth source: bluetooth_wmbus_capture.py
+2025-08-13 23:51:28,343 - INFO - 🔌 Virtual serial port: /dev/ttys016
+2025-08-13 23:51:28,343 - INFO - 📊 Connect wmbusmeters to: /dev/ttys016:9600
+2025-08-13 23:51:28,343 - INFO - ⏰ Will stop automatically after 5 minutes
+2025-08-13 23:51:28,343 - INFO - 💡 Telegrams will be displayed on screen
+2025-08-13 23:51:28,343 - INFO - ==================================================
+2025-08-13 23:51:48,841 - INFO - 📡 Bridging telegram #1: FBFBFBF0110125083EDF916261A90125442D2C70...
+2025-08-13 23:51:48,872 - INFO - 📡 Bridging telegram #2: FE0E0FFBFBFBF0110125088CDF916261A8012544...
+2025-08-13 23:51:48,902 - INFO - 📡 Bridging telegram #3: 012508DBDF916261AB0125442D2C703749741F16...

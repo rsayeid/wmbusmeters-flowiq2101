@@ -5,7 +5,7 @@
 This repository contains high-priority instructions for GitHub Copilot when working on the FlowIQ2101 integration project.
 
 ### 📋 Primary Instructions
-See [COPILOT_INSTRUCTIONS.md](./COPILOT_INSTRUCTIONS.md) for detailed high-priority guidelines.
+See [copilot.instructions.md](./instructions/copilot.instructions.md) for detailed high-priority guidelines.
 
 ### 🎯 Quick Reference
 Run `./copilot_reminder.sh` from the project root for a quick reminder of mandatory procedures.

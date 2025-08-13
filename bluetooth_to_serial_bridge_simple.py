@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """
 Simple Bluetooth to Serial Bridge
-Captures wM-Bus telegr        except Exception as e:
-            self.logger.error(f"Failed to start bluetooth capture: {e}")
-            return False via Bluetooth and bridges them to a virtual serial port
+Captures wM-Bus telegrams via Bluetooth and bridges them to a virtual serial port
 """
 
 import os
@@ -24,11 +22,7 @@ class BluetoothSerialBridge:
         self.slave_name = None
         self.bluetooth_process = None
         self.bridge_thread = None
-        self.timer_thread = None
         self.running = False
-        self.start_time = None
-        self.telegram_count = 0
-        self.timeout_minutes = 5  # Stop after 5 minutes
 
     def setup_logging(self):
         """Setup logging configuration"""
@@ -52,34 +46,21 @@ class BluetoothSerialBridge:
     def start_bluetooth_capture(self):
         """Start the bluetooth capture subprocess"""
         try:
-            # Use absolute path for virtual environment python
-            current_dir = os.getcwd()
-            venv_path = os.path.join(current_dir, ".venv", "bin", "python")
-            capture_script = os.path.join(current_dir, "bluetooth_wmbus_capture.py")
-            
+            # Find virtual environment python if it exists
+            venv_path = ".venv/bin/python"
             if os.path.exists(venv_path):
                 python_cmd = venv_path
                 self.logger.info(f"Using virtual environment Python: {venv_path}")
             else:
                 python_cmd = "python3"
-                self.logger.warning("Virtual environment not found, using system python3")
 
-            # Verify the capture script exists
-            if not os.path.exists(capture_script):
-                self.logger.error(f"Bluetooth capture script not found: {capture_script}")
-                return False
-
-            # Start bluetooth capture with explicit paths and unbuffered output
-            cmd = [python_cmd, "-u", capture_script, "--bridge-mode"]  # -u for unbuffered output, --bridge-mode for stdout output
-            self.logger.info(f"Starting bluetooth capture: {' '.join(cmd)}")
-            
+            # Start bluetooth capture
             self.bluetooth_process = subprocess.Popen(
-                cmd,
+                [python_cmd, "bluetooth_wmbus_capture.py"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 universal_newlines=True,
-                bufsize=0,  # Unbuffered
-                cwd=current_dir  # Set working directory explicitly
+                bufsize=1
             )
             self.logger.info("✓ Started Bluetooth capture process")
             return True
@@ -87,22 +68,13 @@ class BluetoothSerialBridge:
             self.logger.error(f"Failed to start Bluetooth capture: {e}")
             return False
 
-    def timer_thread_func(self):
-        """Timer thread to stop bridge after specified minutes"""
-        time.sleep(self.timeout_minutes * 60)  # Convert minutes to seconds
-        if self.running and self.start_time is not None:
-            elapsed = time.time() - self.start_time
-            self.logger.info(f"🕰️ Timeout reached after {self.timeout_minutes} minutes ({elapsed:.1f}s)")
-            self.logger.info(f"📊 Total telegrams processed: {self.telegram_count}")
-            self.stop_bridge()
-
     def bridge_data(self):
         """Bridge data from bluetooth capture to virtual serial port"""
         self.logger.info("🔄 Starting data bridge...")
         
         while self.running and self.bluetooth_process:
             try:
-                if self.bluetooth_process.poll() is None and self.bluetooth_process.stdout:
+                if self.bluetooth_process.poll() is None:
                     line = self.bluetooth_process.stdout.readline()
                     if line:
                         line = line.strip()
@@ -120,44 +92,24 @@ class BluetoothSerialBridge:
                                 for part in parts:
                                     if len(part) >= 40 and all(c in '0123456789ABCDEFabcdef' for c in part):
                                         telegram = part.strip()
-                                        self.telegram_count += 1
+                                        self.logger.info(f"📡 Bridging telegram: {telegram[:40]}...")
                                         
-                                        # Display telegram on screen
-                                        print(f"\n📡 TELEGRAM #{self.telegram_count}")
-                                        print(f"🕐 Time: {datetime.now().strftime('%H:%M:%S')}")
-                                        print(f"📏 Length: {len(telegram)} chars")
-                                        print(f"📧 Data: {telegram}")
-                                        print("-" * 50)
-                                        
-                                        self.logger.info(f"📡 Bridging telegram #{self.telegram_count}: {telegram[:40]}...")
-                                        
-                                        # Write to virtual serial port in wmbusmeters format
+                                        # Write to virtual serial port
                                         if self.master_fd is not None:
                                             try:
-                                                # Format as wmbusmeters expects: telegram=|HEX_DATA|
-                                                wmbus_format = f"telegram=|{telegram}|\n"
-                                                os.write(self.master_fd, wmbus_format.encode())
+                                                telegram_with_newline = telegram + '\n'
+                                                os.write(self.master_fd, telegram_with_newline.encode())
                                             except Exception as e:
                                                 self.logger.error(f"Failed to write to serial port: {e}")
                             else:
                                 telegram = line
-                                self.telegram_count += 1
+                                self.logger.info(f"📡 Bridging telegram: {telegram[:40]}...")
                                 
-                                # Display telegram on screen
-                                print(f"\n📡 TELEGRAM #{self.telegram_count}")
-                                print(f"🕐 Time: {datetime.now().strftime('%H:%M:%S')}")
-                                print(f"📏 Length: {len(telegram)} chars")
-                                print(f"📧 Data: {telegram}")
-                                print("-" * 50)
-                                
-                                self.logger.info(f"📡 Bridging telegram #{self.telegram_count}: {telegram[:40]}...")
-                                
-                                # Write to virtual serial port in wmbusmeters format
+                                # Write to virtual serial port
                                 if self.master_fd is not None:
                                     try:
-                                        # Format as wmbusmeters expects: telegram=|HEX_DATA|
-                                        wmbus_format = f"telegram=|{telegram}|\n"
-                                        os.write(self.master_fd, wmbus_format.encode())
+                                        telegram_with_newline = telegram + '\n'
+                                        os.write(self.master_fd, telegram_with_newline.encode())
                                     except Exception as e:
                                         self.logger.error(f"Failed to write to serial port: {e}")
                         else:
@@ -165,15 +117,7 @@ class BluetoothSerialBridge:
                             if line:
                                 self.logger.debug(f"🔍 Bluetooth debug: {line}")
                 else:
-                    # Check if bluetooth process has errors
-                    if self.bluetooth_process.poll() is not None:
-                        return_code = self.bluetooth_process.returncode
-                        stderr_output = self.bluetooth_process.stderr.read() if self.bluetooth_process.stderr else "No error output"
-                        self.logger.warning(f"⚠️ Bluetooth process terminated with code {return_code}")
-                        if stderr_output:
-                            self.logger.error(f"Bluetooth process stderr: {stderr_output}")
-                    else:
-                        self.logger.warning("⚠️ Bluetooth process stdout ended but process still running")
+                    self.logger.warning("⚠️ Bluetooth process terminated")
                     break
                     
             except Exception as e:
@@ -197,20 +141,13 @@ class BluetoothSerialBridge:
 
         # Start bridging
         self.running = True
-        self.start_time = time.time()  # Initialize start time
         self.bridge_thread = threading.Thread(target=self.bridge_data)
         self.bridge_thread.start()
-        
-        # Start timer thread
-        self.timer_thread = threading.Thread(target=self.timer_thread_func)
-        self.timer_thread.start()
         
         self.logger.info("🚀 Bridge running!")
         self.logger.info(f"📱 Bluetooth source: bluetooth_wmbus_capture.py")
         self.logger.info(f"🔌 Virtual serial port: {self.slave_name}")
         self.logger.info(f"📊 Connect wmbusmeters to: {self.slave_name}:9600")
-        self.logger.info(f"⏰ Will stop automatically after {self.timeout_minutes} minutes")
-        self.logger.info("💡 Telegrams will be displayed on screen")
         self.logger.info("=" * 50)
         
         return True
@@ -233,10 +170,6 @@ class BluetoothSerialBridge:
         if self.bridge_thread and self.bridge_thread.is_alive():
             self.bridge_thread.join(timeout=5)
 
-        # Wait for timer thread
-        if self.timer_thread and self.timer_thread.is_alive():
-            self.timer_thread.join(timeout=2)
-
         # Close file descriptors
         if self.master_fd:
             os.close(self.master_fd)
@@ -245,11 +178,6 @@ class BluetoothSerialBridge:
             os.close(self.slave_fd)
             self.slave_fd = None
 
-        # Final statistics
-        if self.start_time is not None:
-            elapsed = time.time() - self.start_time
-            self.logger.info(f"📊 Session ended: {self.telegram_count} telegrams in {elapsed:.1f}s")
-        
         self.logger.info("✓ Bridge stopped")
 
 # Global bridge instance for signal handler

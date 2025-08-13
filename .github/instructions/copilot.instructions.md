@@ -1,3 +1,6 @@
+---
+applyTo: '**'
+---
 # 🚨 HIGH PRIORITY COPILOT INSTRUCTIONS 🚨
 
 ## ⚠️ CRITICAL PROJECT GUIDELINES - MUST FOLLOW

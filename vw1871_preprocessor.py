@@ -13,7 +13,7 @@ Date: 2025-08-13
 import sys
 import re
 import logging
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -68,31 +68,56 @@ class VW1871Preprocessor:
         except Exception as e:
             return {"valid": False, "error": str(e)}
     
-    def convert_to_wmbus_format(self, hex_data: str) -> Optional[str]:
+    def _strip_wrapper(self, hex_data: str) -> Tuple[str, str]:
+        """Strip known VW1871 wrapper preamble/trailer if present.
+
+        Wrapper pattern observed: FBFBFBF0 <core> FEFE0E0F
+        Returns (core, reason)
         """
-        Convert VW1871 telegram to standard wM-Bus format for wmbusmeters.
-        
-        The goal is to transform the VW1871 output to a format that wmbusmeters
-        can recognize and process with the FlowIQ2101 driver.
+        hd = hex_data.lower()
+        if hd.startswith('fbfbfbf0') and hd.endswith('fefe0e0f') and len(hd) > 16:
+            core = hd[8:-8]
+            return core.upper(), 'wrapper-stripped'
+        return hex_data.upper(), 'no-wrapper'
+
+    def _locate_real_frame(self, core: str) -> Optional[str]:
+        """Locate actual wM-Bus frame inside core by finding length byte 0x30 directly before C-field 0x44 and manufacturer 2D2C.
+
+        Heuristic: look for pattern 30 44 2D 2C 70 37 49 74 (ID little-endian) 1F 16.
+        Then use first byte (0x30) as L (total bytes incl length = 49).
+        Validate that we have at least L+1 bytes from that point.
+        Return the extracted frame (exactly L+1 bytes) as hex string or None.
         """
-        analysis = self.analyze_telegram_structure(hex_data)
-        
-        if not analysis["valid"]:
-            logger.warning(f"Invalid telegram structure: {analysis.get('error', 'Unknown error')}")
+        pattern = '30442d2c703749741f16'
+        idx = core.lower().find(pattern)
+        if idx == -1:
             return None
-            
-        # For now, pass through the telegram as-is but with proper formatting
-        # This can be enhanced based on testing results
-        
-        # Remove any length prefix if it exists (first byte might be length)
-        # and ensure proper wM-Bus frame structure
-        processed_telegram = hex_data
-        
-        # Log analysis for debugging
-        logger.debug(f"Telegram analysis: {analysis}")
-        logger.info(f"Converted telegram: {processed_telegram[:32]}... (length: {len(processed_telegram)//2} bytes)")
-        
-        return processed_telegram
+        L = int(core[idx:idx+2], 16)
+        needed = (L + 1) * 2
+        if len(core) - idx < needed:
+            # Not enough bytes; truncated capture
+            return None
+        frame = core[idx:idx+needed]
+        return frame.upper()
+
+    def convert_to_wmbus_format(self, hex_data: str) -> Optional[str]:
+        """Convert raw VW1871-captured hex (possibly wrapped) into clean wM-Bus frame suitable for wmbusmeters.
+
+        Steps:
+          1. Strip BLE/VW1871 wrapper (FBFBFBF0 ... FEFE0E0F) if present.
+          2. Locate real frame start via heuristic (length 0x30 before C=0x44, mfct=2D2C, id=70374974, ver=1F, type=16).
+          3. Extract exact L+1 bytes.
+          4. Output only that frame hex.
+        If heuristic fails, fall back to original (so user can inspect manually).
+        """
+        core, reason = self._strip_wrapper(hex_data)
+        frame = self._locate_real_frame(core)
+        if frame:
+            logger.info(f"Extracted wM-Bus frame (L=0x{frame[0:2]}): {frame}")
+            return frame
+        else:
+            logger.warning("Heuristic failed to locate inner frame; passing through unmodified")
+            return core  # better than dropping; user can post-process
     
     def process_line(self, line: str) -> Optional[str]:
         """Process a single line from VW1871 bridge output."""

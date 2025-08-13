@@ -1,0 +1,5 @@
+2025-08-13 23:51:28,317 - INFO - 🔧 VW1871 Preprocessor started - converting telegrams for wmbusmeters
+2025-08-13 23:51:28,317 - INFO -    Input: VW1871 BLE bridge format
+2025-08-13 23:51:28,317 - INFO -    Output: wmbusmeters-compatible format
+2025-08-13 23:52:47,192 - INFO - 
+⛔ Preprocessor stopped. Processed 0 telegrams.

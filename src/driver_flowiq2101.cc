@@ -33,6 +33,8 @@ namespace
         // FlowIQ2101
         di.addDetection(MANUFACTURER_KAM, 0x06,  0x1c);
         di.addDetection(MANUFACTURER_KAM, 0x16,  0x1c);
+        // Added: Observed variant with Version=0x1F DeviceType=0x16 (captures: ID 74493770, full + compact 7+1 pattern)
+        di.addDetection(MANUFACTURER_KAM, 0x1f,  0x16);
 
         di.setConstructor([](MeterInfo& mi, DriverInfo& di){ return shared_ptr<Meter>(new Driver(mi, di)); });
     });

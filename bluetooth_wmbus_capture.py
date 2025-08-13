@@ -183,6 +183,11 @@ class WMBusBluetoothCapture:
                     if self.is_potential_wmbus_telegram(hex_data):
                         logger.info("🎯 POTENTIAL wM-Bus TELEGRAM DETECTED!")
                         logger.info(f"    Full hex: {hex_data}")
+                        
+                        # Output to stdout for bridge mode (check command line args)
+                        import sys
+                        if len(sys.argv) > 1 and sys.argv[1] == '--bridge-mode':
+                            print(hex_data, flush=True)  # Output pure hex for bridge
                     
                 except Exception as e:
                     logger.error(f"❌ Notification processing error: {e}")
@@ -199,14 +204,18 @@ class WMBusBluetoothCapture:
         if len(hex_data) < 20:  # Too short
             return False
             
-        # wM-Bus telegrams often start with length byte followed by specific patterns
+        # VW1871 format: starts with FBFBFBF0 header
+        if hex_data.startswith('FBFBFBF0'):
+            return True
+            
+        # Standard wM-Bus telegrams: start with length byte followed by specific patterns
         # Common patterns: 44, 68 (frame start), or other length indicators
         if hex_data.startswith(('44', '68', '2E', '1E', '23', '4D')):
             return True
             
         # Check for manufacturer codes that appear in telegrams
-        # Common manufacturer codes in hex: 2C37 (Kamstrup), 2324 (Hydrometer), etc.
-        wmbus_patterns = ['2C37', '2324', '11A5', '1592', '5B4', '601']
+        # Common manufacturer codes in hex: 2D2C (Kamstrup), 2C37, 2324 (Hydrometer), etc.
+        wmbus_patterns = ['2D2C', '2C37', '2324', '11A5', '1592', '5B4', '601']
         for pattern in wmbus_patterns:
             if pattern in hex_data:
                 return True

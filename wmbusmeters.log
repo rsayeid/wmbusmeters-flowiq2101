@@ -1,0 +1,46 @@
+(wmbusmeters) version: settingup_1.19.0-42-gc6e3868 with local changes
+(config) store meter files in: "./meter_readings"
+(config) using device: /dev/ttyUSB0:amb8465:c1 
+(config) number of meters: 1
+[ALARM SpecifiedDeviceNotFound] the device /dev/ttyUSB0:amb8465:c1 is not working
+No wmbus device detected, waiting for a device to be plugged in.
+(shell) invoking /bin/pidof failed!
+(serial) event loop stopped!
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+(shell) invoking /bin/pidof failed!
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+(wmbusmeters) version: settingup_1.19.0-42-gc6e3868 with local changes
+(config) store meter files in: "./meter_readings"
+(config) using device: /dev/ttyUSB0:amb8465:c1 
+(config) number of meters: 1
+[ALARM SpecifiedDeviceNotFound] the device /dev/ttyUSB0:amb8465:c1 is not working
+No wmbus device detected, waiting for a device to be plugged in.
+(shell) invoking /bin/pidof failed!
+(serial) event loop stopped!
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+Notice! Wmbusmeters daemon (pid 0) is running and it might hog any wmbus devices.
+(shell) invoking /bin/pidof failed!
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
+Notice! Other wmbusmeters (pid 0) is running and it might hog any wmbus devices.
