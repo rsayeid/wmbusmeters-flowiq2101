@@ -46,6 +46,15 @@ try:
 except ImportError:
     BLEAK_AVAILABLE = False
 
+"""
+Classic Bluetooth / serial functionality was added previously (pyserial / pybluez
+support, baud scanning, IEC handshake, probes). At the user's request this has
+been fully removed to return the script to a pure BLE passive logger.
+
+If future reinstatement is desired, retrieve the earlier revision from VCS
+history on branch 'settingup' before this removal commit.
+"""
+
 LOG_COLORS = True if sys.stdout.isatty() else False
 
 def color(code: str, text: str) -> str:
@@ -64,14 +73,18 @@ class InteractiveBLELogger:
             base_dir = os.path.dirname(os.path.abspath(__file__))
             if not os.path.isabs(self.args.logdir):
                 self.args.logdir = os.path.join(base_dir, self.args.logdir)
+        # Filters
         self.target_address_norm = normalize_address(self.args.target_address) if getattr(self.args, 'target_address', None) else None
         self.name_contains = self.args.name_contains.lower() if self.args.name_contains else None
+        # BLE state
         self.selected_device: Optional[BLEDevice] = None
         self.client: Optional[BleakClient] = None
+        # Runtime / logging
         self.running = True
         self.log_file_path: Optional[str] = None
         self.log_file_handle = None
         self.notification_count = 0
+        self.start_time = None
 
     async def scan_once(self, timeout: int) -> List[BLEDevice]:
         if self.args.debug:
@@ -154,10 +167,10 @@ class InteractiveBLELogger:
     async def discover_and_subscribe(self):
         if not self.client:
             return
-        # Service database is populated lazily after connect; ensure it's accessed to trigger cache build
-        _ = self.client.services  # touch services
+        _ = self.client.services
         print(color('36', f"[{ts()}] Discovering services & characteristics..."))
         sub_targets = []
+        read_targets = []
         for svc in self.client.services:
             print(color('35', f" Service {svc.uuid}"))
             for char in svc.characteristics:
@@ -165,18 +178,46 @@ class InteractiveBLELogger:
                 print(f"   Char {char.uuid}  props=[{props}]  handle={char.handle}")
                 if any(p in char.properties for p in ("notify", "indicate")):
                     sub_targets.append(char)
-        if not sub_targets:
+                if self.args.read_all and 'read' in char.properties:
+                    read_targets.append(char)
+        if sub_targets:
+            print(color('36', f"[{ts()}] Subscribing to {len(sub_targets)} characteristics..."))
+            for char in sub_targets:
+                try:
+                    async def _cb(ch, data, self_ref=self):
+                        self_ref._notification_handler(ch, data)
+                    await self.client.start_notify(char.uuid, _cb)
+                    print(color('32', f"  Subscribed {char.uuid}"))
+                except Exception as e:
+                    print(color('31', f"  Failed subscribe {char.uuid}: {e}"))
+        else:
             print(color('33', f"[{ts()}] No notifiable/indicatable characteristics found."))
-            return
-        print(color('36', f"[{ts()}] Subscribing to {len(sub_targets)} characteristics..."))
-        for char in sub_targets:
-            try:
-                async def _cb(ch, data, self_ref=self):
-                    self_ref._notification_handler(ch, data)
-                await self.client.start_notify(char.uuid, _cb)
-                print(color('32', f"  Subscribed {char.uuid}"))
-            except Exception as e:
-                print(color('31', f"  Failed subscribe {char.uuid}: {e}"))
+        # Perform read-all after subscriptions
+        if read_targets:
+            print(color('36', f"[{ts()}] Reading {len(read_targets)} readable characteristics (one-shot)..."))
+            for char in read_targets:
+                try:
+                    data = await self.client.read_gatt_char(char.uuid)
+                    self._emit_read_record(char, data)
+                except Exception as e:
+                    print(color('31', f"  Read failed {char.uuid}: {e}"))
+
+    def _emit_read_record(self, char, data: bytes):
+        hex_data = data.hex().upper()
+        ascii_data = ''.join(chr(b) if 32 <= b <= 126 else '.' for b in data)
+        record = {
+            'ts': ts(),
+            'type': 'read',
+            'uuid': str(char.uuid),
+            'length': len(data),
+            'raw_hex': hex_data,
+            'raw_ascii': ascii_data,
+        }
+        print(color('34', f"[{record['ts']}] READ uuid={record['uuid']} len={record['length']}"))
+        print(f"   HEX  {hex_data}")
+        print(f"   ASCII {ascii_data}")
+        if self.log_file_handle:
+            self.log_file_handle.write(json.dumps(record) + '\n')
 
     def _open_log_file(self):
         # Always open log file (args.logdir has default)
@@ -220,7 +261,8 @@ class InteractiveBLELogger:
                 loop.add_signal_handler(sig, self._signal_stop)
             except NotImplementedError:
                 pass
-        # If filters specified, attempt direct find first
+        self._open_log_file()
+        # BLE path only
         if self.target_address_norm or self.name_contains:
             self.selected_device = await self.find_target_device()
             if not self.selected_device:
@@ -229,16 +271,19 @@ class InteractiveBLELogger:
             self.selected_device = await self.interactive_scan_select()
             if not self.selected_device:
                 return 0
-        self._open_log_file()
         connected = await self.connect(self.selected_device)
         if not connected:
             self._close_log_file()
             return 2
         await self.discover_and_subscribe()
         print(color('36', f"[{ts()}] Listening for notifications (Ctrl+C to stop)..."))
-        start = time.time()
+        self.start_time = time.time()
+        start = self.start_time
         try:
             while self.running:
+                if self.args.duration and (time.time() - start) >= self.args.duration:
+                    self.running = False
+                    break
                 await asyncio.sleep(0.5)
         finally:
             duration = time.time() - start
@@ -259,6 +304,7 @@ class InteractiveBLELogger:
         self._close_log_file()
 
 
+
 # Helper to normalize MAC-like addresses (remove separators, uppercase)
 def normalize_address(addr: Optional[str]) -> Optional[str]:
     if not addr:
@@ -275,6 +321,8 @@ def parse_args():
     p.add_argument('--scan-attempts', type=int, default=5, help='Number of repeated scan attempts when using filters (default 5)')
     p.add_argument('--scan-timeout', type=int, default=8, help='Per-attempt scan timeout when using filters (default 8)')
     p.add_argument('--debug', action='store_true', help='Verbose discovery output (list all raw devices each attempt)')
+    p.add_argument('--duration', type=int, default=0, help='If >0, auto-stop after N seconds (useful for tests)')
+    p.add_argument('--read-all', action='store_true', help='After connecting BLE, read every characteristic that supports read')
     return p.parse_args()
 
 async def amain():
