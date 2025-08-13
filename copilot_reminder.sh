@@ -39,5 +39,5 @@ echo "   Key: 44E9112D06BD762EC2BFECE57E487C9B"
 echo "   Device: VW1871-250111"
 echo "   Pattern: 7 compact + 1 full frame"
 echo
-echo "📖 Read full instructions: cat COPILOT_INSTRUCTIONS.md"
+echo "📖 Read full instructions: cat .github/COPILOT_INSTRUCTIONS.md"
 echo "=================================================="
