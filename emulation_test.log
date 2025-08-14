@@ -1,0 +1,29 @@
+🎯 VW1871 → AMB8465 Emulation Bridge
+===================================
+Emulating: AMB8465 (Metis-II) dongle
+Device: VW1871-250111
+Mode: C1 (compatible with FlowIQ2101)
+
+📁 Created AMB8465-style configuration
+📡 Created AMB8465 emulation pipe: /tmp/amb8465_emulation
+
+🚀 Starting AMB8465 emulation pipeline...
+
+📊 AMB8465 Emulation Status:
+   BLE Capture PID: 28938
+   wmbusmeters PID: 28940
+   Emulation Pipe: /tmp/amb8465_emulation
+   Device Type: AMB8465 (Metis-II) compatible
+
+🎯 Live AMB8465 emulation active...
+   - Emulating AMB8465 dongle behavior
+   - Processing C1 mode telegrams
+   - Compatible with standard wmbusmeters
+
+Press Ctrl+C to stop emulation
+========================================
+2025-08-14 10:06:47,057 - INFO - 🔍 Starting Bluetooth scan (timeout: 20.0s)
+[10:06:48] 🔧 Starting wmbusmeters (AMB8465 mode)...
+
+🧹 Cleaning up AMB8465 emulation...
+✅ Cleanup complete

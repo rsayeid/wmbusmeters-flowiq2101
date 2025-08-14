@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """
-Bluetooth to Serial Bridge with wmbusmeters Integration
-Captures wM-Bus telegrams via Bluetooth and processes them with wmbusmeters
+DEPRECATED: Integrated Bluetooth->serial + wmbusmeters bridge.
+Use: ./run_flowiq2101_live.sh --stdout --no-prompt \
+    EXTRA_CAPTURE_OPTS="--bridge-mode --print-all"
+This script now exits immediately; original code left below.
 """
+import sys
+print("[DEPRECATED] Use run_flowiq2101_live.sh --stdout instead of bluetooth_to_serial_bridge_integrated.py", file=sys.stderr)
+sys.exit(1)
+
+# --- Original implementation (inactive) ---
 
 import os
 import sys

@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 """
-Simple Bluetooth to Serial Bridge
-Captures wM-Bus telegr        except Exception as e:
-            self.logger.error(f"Failed to start bluetooth capture: {e}")
-            return False via Bluetooth and bridges them to a virtual serial port
+DEPRECATED: This legacy Bluetooth-to-virtual-serial bridge is no longer used.
+
+Use the unified stdout pipeline instead:
+    ./run_flowiq2101_live.sh --stdout --no-prompt \
+         EXTRA_CAPTURE_OPTS="--bridge-mode --print-all --name-contains VW1871"
+
+If you truly need a PTY, create a symlink yourself:
+    ./run_flowiq2101_live.sh --stdout | tee live_logs/frames_latest.hex
+
+This script now exits immediately to prevent accidental usage.
 """
+import sys
+print("[DEPRECATED] Use run_flowiq2101_live.sh --stdout instead of bluetooth_to_serial_bridge.py", file=sys.stderr)
+sys.exit(1)
+
+# Original implementation retained below (unreachable) for reference.
 
 import os
 import sys

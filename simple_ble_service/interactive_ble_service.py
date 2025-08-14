@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 Interactive BLE Service (Mac compatible)
 ---------------------------------------
@@ -36,7 +37,7 @@ import re
 import signal
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List
 
 try:
@@ -63,10 +64,12 @@ def color(code: str, text: str) -> str:
     return f"\033[{code}m{text}\033[0m"
 
 def ts() -> str:
-    return datetime.utcnow().isoformat()
+    # Timezone-aware ISO UTC timestamp
+    return datetime.now(timezone.utc).isoformat()
 
 class InteractiveBLELogger:
     def __init__(self, args):
+        """Initialize logger state and user options."""
         self.args = args
         # Resolve log directory relative to script if relative
         if self.args.logdir:
@@ -77,14 +80,18 @@ class InteractiveBLELogger:
         self.target_address_norm = normalize_address(self.args.target_address) if getattr(self.args, 'target_address', None) else None
         self.name_contains = self.args.name_contains.lower() if self.args.name_contains else None
         # BLE state
-        self.selected_device: Optional[BLEDevice] = None
-        self.client: Optional[BleakClient] = None
+        self.selected_device = None  # type: Optional[BLEDevice]
+        self.client = None           # type: Optional[BleakClient]
         # Runtime / logging
         self.running = True
-        self.log_file_path: Optional[str] = None
+        # Logging fields
+        self.log_file_path = None  # type: Optional[str]
         self.log_file_handle = None
         self.notification_count = 0
         self.start_time = None
+        # RSSI tracking
+        self.last_rssi = None
+        self._rssi_task = None
 
     async def scan_once(self, timeout: int) -> List[BLEDevice]:
         if self.args.debug:
@@ -112,7 +119,11 @@ class InteractiveBLELogger:
             devices = await self.scan_once(self.args.scan_timeout)
             for d in devices:
                 if self.device_matches_filters(d):
-                    print(color('32', f"[{ts()}] Target device matched on attempt {attempt}: {d.name or 'Unknown'} ({d.address})"))
+                    # Store initial RSSI if present (Bleak may expose via metadata)
+                    initial_rssi = getattr(d, 'rssi', None)
+                    if initial_rssi is not None:
+                        self.last_rssi = initial_rssi
+                    print(color('32', f"[{ts()}] Target device matched on attempt {attempt}: {d.name or 'Unknown'} ({d.address}) RSSI={initial_rssi if initial_rssi is not None else 'NA'}"))
                     return d
             print(color('33', f"[{ts()}] Target not found (attempt {attempt}/{attempts})."))
         print(color('31', f"[{ts()}] Target device not found after {attempts} attempts."))
@@ -125,7 +136,13 @@ class InteractiveBLELogger:
             print(color('33', f"[{ts()}] No devices found."))
             return None
         print(color('32', f"[{ts()}] Found {len(devices)} devices."))
-        return self.choose_device(devices)
+        chosen = self.choose_device(devices)
+        if chosen is not None:
+            # Record initial RSSI if Bleak provided it (platform dependent)
+            initial_rssi = getattr(chosen, 'rssi', None)
+            if initial_rssi is not None:
+                self.last_rssi = initial_rssi
+        return chosen
 
     def choose_device(self, devices: List[BLEDevice]) -> Optional[BLEDevice]:
         if not devices:
@@ -201,6 +218,57 @@ class InteractiveBLELogger:
                     self._emit_read_record(char, data)
                 except Exception as e:
                     print(color('31', f"  Read failed {char.uuid}: {e}"))
+        # Start RSSI polling if enabled
+        if self.args.rssi_poll > 0 and self._rssi_task is None:
+            self._rssi_task = asyncio.create_task(self._rssi_poll_loop())
+
+    async def _rssi_poll_loop(self):
+        interval = max(1, self.args.rssi_poll)
+        while self.running:
+            try:
+                # Prefer direct connected RSSI if backend exposes it
+                if self.client and self.client.is_connected:
+                    get_rssi = getattr(self.client, 'get_rssi', None)
+                    if callable(get_rssi):
+                        try:
+                            rssi_val = get_rssi()
+                            # Some backends may return coroutine; handle both
+                            if asyncio.iscoroutine(rssi_val):
+                                rssi_val = await rssi_val
+                            if isinstance(rssi_val, int):
+                                self.last_rssi = rssi_val
+                                if self.args.rssi_heartbeat:
+                                    print(color('90', f"[{ts()}] (heartbeat) current RSSI={self.last_rssi}dBm"))
+                                await asyncio.sleep(interval)
+                                continue
+                        except Exception:
+                            pass
+                # Fallback: short passive scan to refresh RSSI
+                scan_timeout = max(0.5, self.args.rssi_scan_timeout)
+                devices = await BleakScanner.discover(timeout=scan_timeout)
+                target_norm = self.target_address_norm or (normalize_address(self.selected_device.address) if self.selected_device else None)
+                if target_norm:
+                    for d in devices:
+                        if normalize_address(d.address) == target_norm:
+                            dev_rssi = getattr(d, 'rssi', None)
+                            if dev_rssi is not None:
+                                self.last_rssi = dev_rssi
+                                if self.args.rssi_heartbeat:
+                                    print(color('90', f"[{ts()}] (heartbeat) current RSSI={self.last_rssi}dBm (scan)"))
+                            break
+                if self.args.debug:
+                    print(color('90', f"[{ts()}] (rssi-scan) devices={len(devices)} matched={'yes' if (self.last_rssi is not None) else 'no'}"))
+            except Exception:
+                pass
+            else:
+                # If no exception but also no update, still print heartbeat if enabled and we have a value
+                if self.args.rssi_heartbeat:
+                    if self.last_rssi is not None:
+                        print(color('90', f"[{ts()}] (heartbeat) current RSSI={self.last_rssi}dBm (idle)"))
+                    else:
+                        print(color('90', f"[{ts()}] (heartbeat) current RSSI=NA (no update)"))
+            await asyncio.sleep(interval)
+
 
     def _emit_read_record(self, char, data: bytes):
         hex_data = data.hex().upper()
@@ -222,7 +290,7 @@ class InteractiveBLELogger:
     def _open_log_file(self):
         # Always open log file (args.logdir has default)
         os.makedirs(self.args.logdir, exist_ok=True)
-        fname = f"ble_session_{datetime.utcnow().strftime('%Y%m%dT%H%M%S')}.jsonl"
+        fname = f"ble_session_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}.jsonl"
         self.log_file_path = os.path.join(self.args.logdir, fname)
         self.log_file_handle = open(self.log_file_path, 'a', buffering=1)
         print(color('32', f"[{ts()}] Logging raw notifications to {self.log_file_path}"))
@@ -244,8 +312,10 @@ class InteractiveBLELogger:
             'length': len(data),
             'raw_hex': hex_data,
             'raw_ascii': ascii_data,
+            'rssi': self.last_rssi,
         }
-        print(color('34', f"[{record['ts']}] NOTIF #{self.notification_count} handle={sender_handle} len={record['length']}"))
+        rssi_display = f"{self.last_rssi}dBm" if self.last_rssi is not None else "NA"
+        print(color('34', f"[{record['ts']}] NOTIF #{self.notification_count} handle={sender_handle} len={record['length']} RSSI={rssi_display}"))
         print(f"   HEX  {hex_data}")
         print(f"   ASCII {ascii_data}")
         if self.log_file_handle:
@@ -301,6 +371,16 @@ class InteractiveBLELogger:
                 print(color('32', f"[{ts()}] Disconnected."))
             except Exception as e:
                 print(color('31', f"[{ts()}] Disconnect error: {e}"))
+        # Cancel RSSI task
+        if self._rssi_task and not self._rssi_task.done():
+            self._rssi_task.cancel()
+            try:
+                await self._rssi_task
+            except asyncio.CancelledError:
+                # Expected when shutting down
+                pass
+            except Exception:
+                pass
         self._close_log_file()
 
 
@@ -323,6 +403,9 @@ def parse_args():
     p.add_argument('--debug', action='store_true', help='Verbose discovery output (list all raw devices each attempt)')
     p.add_argument('--duration', type=int, default=0, help='If >0, auto-stop after N seconds (useful for tests)')
     p.add_argument('--read-all', action='store_true', help='After connecting BLE, read every characteristic that supports read')
+    p.add_argument('--rssi-poll', type=int, default=5, help='Poll RSSI every N seconds (0 disables, default 5)')
+    p.add_argument('--rssi-heartbeat', action='store_true', help='Print a heartbeat line each poll interval showing latest RSSI')
+    p.add_argument('--rssi-scan-timeout', type=float, default=1.2, help='Scan timeout (s) used in fallback RSSI scan (default 1.2)')
     return p.parse_args()
 
 async def amain():

@@ -1,0 +1,165 @@
+2025-08-14 06:29:21,145 - INFO - 🔧 VW1871 Preprocessor started - converting telegrams for wmbusmeters
+2025-08-14 06:29:21,146 - INFO -    Input: VW1871 BLE bridge format
+2025-08-14 06:29:21,146 - INFO -    Output: wmbusmeters-compatible format
+2025-08-14 06:29:31,884 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,885 - INFO - 📡 Processed telegram #1
+2025-08-14 06:29:31,885 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,885 - INFO - 📡 Processed telegram #2
+2025-08-14 06:29:31,885 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,885 - INFO - 📡 Processed telegram #3
+2025-08-14 06:29:31,885 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,885 - INFO - 📡 Processed telegram #4
+2025-08-14 06:29:31,885 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,885 - INFO - 📡 Processed telegram #5
+2025-08-14 06:29:31,886 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,886 - INFO - 📡 Processed telegram #6
+2025-08-14 06:29:31,886 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,886 - INFO - 📡 Processed telegram #7
+2025-08-14 06:29:31,886 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,886 - INFO - 📡 Processed telegram #8
+2025-08-14 06:29:31,886 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20D5F25F022192E2E08D553B1D062EAA43EE14D53A08802AD672C864FAB6E048144A8ECFCAE8
+2025-08-14 06:29:31,886 - INFO - 📡 Processed telegram #9
+2025-08-14 06:29:31,886 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,886 - INFO - 📡 Processed telegram #10
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #11
+2025-08-14 06:29:31,913 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20D5F25F022192E2E08D553B1D062EAA43EE14D53A08802AD672C864FAB6E048144A8ECFCAE8
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #12
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #13
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #14
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #15
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #16
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #17
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #18
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #19
+2025-08-14 06:29:31,913 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,913 - INFO - 📡 Processed telegram #20
+2025-08-14 06:29:31,973 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20DD20600221A82376440D381D9CC9E457FC1DAA26393A35262E1FFB8F703615860D5501AA52
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #21
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #22
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #23
+2025-08-14 06:29:31,973 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20DD20600221A82376440D381D9CC9E457FC1DAA26393A35262E1FFB8F703615860D5501AA52
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #24
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #25
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #26
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #27
+2025-08-14 06:29:31,973 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,973 - INFO - 📡 Processed telegram #28
+2025-08-14 06:29:31,974 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,974 - INFO - 📡 Processed telegram #29
+2025-08-14 06:29:31,974 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:31,974 - INFO - 📡 Processed telegram #30
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #31
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #32
+2025-08-14 06:29:32,003 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20E540600221CDA95597DBA56069B2F193ACD9A6F3B86CE5E0F26F58AC090C9A1383AE60D440
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #33
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #34
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #35
+2025-08-14 06:29:32,003 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20E540600221CDA95597DBA56069B2F193ACD9A6F3B86CE5E0F26F58AC090C9A1383AE60D440
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #36
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #37
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #38
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #39
+2025-08-14 06:29:32,003 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,003 - INFO - 📡 Processed telegram #40
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #41
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #42
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #43
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #44
+2025-08-14 06:29:32,010 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20ED6160022150B77DA6A6902584A5699AFF4A35AC9604657E9812DA8A2ACAA6B480EF8AABFA
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #45
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #46
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #47
+2025-08-14 06:29:32,010 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20ED6160022150B77DA6A6902584A5699AFF4A35AC9604657E9812DA8A2ACAA6B480EF8AABFA
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #48
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #49
+2025-08-14 06:29:32,010 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:29:32,010 - INFO - 📡 Processed telegram #50
+2025-08-14 06:30:31,295 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,296 - INFO - 📡 Processed telegram #51
+2025-08-14 06:30:31,296 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,296 - INFO - 📡 Processed telegram #52
+2025-08-14 06:30:31,297 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,297 - INFO - 📡 Processed telegram #53
+2025-08-14 06:30:31,297 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,297 - INFO - 📡 Processed telegram #54
+2025-08-14 06:30:31,297 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #55
+2025-08-14 06:30:31,298 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #56
+2025-08-14 06:30:31,298 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #57
+2025-08-14 06:30:31,298 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #58
+2025-08-14 06:30:31,298 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #59
+2025-08-14 06:30:31,298 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20FDA3600221BB523FE4559A09F7A502B2ED7CC23EFE4E41ACD72BD4806D2983A0CE2BA8280C
+2025-08-14 06:30:31,298 - INFO - 📡 Processed telegram #60
+2025-08-14 06:31:53,753 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20FDA3600221BB523FE4559A09F7A502B2ED7CC23EFE4E41ACD72BD4806D2983A0CE2BA8280C
+2025-08-14 06:31:53,753 - INFO - 📡 Processed telegram #61
+2025-08-14 06:31:53,753 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #62
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #63
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #64
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #65
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #66
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #67
+2025-08-14 06:31:53,754 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,754 - INFO - 📡 Processed telegram #68
+2025-08-14 06:31:53,755 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,755 - INFO - 📡 Processed telegram #69
+2025-08-14 06:31:53,756 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:31:53,756 - INFO - 📡 Processed telegram #70
+2025-08-14 06:33:16,086 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,086 - INFO - 📡 Processed telegram #71
+2025-08-14 06:33:16,086 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,086 - INFO - 📡 Processed telegram #72
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #73
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #74
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #75
+2025-08-14 06:33:16,087 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D2005C360022169CE9BF47EB0D5C2DBA062CA3F62150DF2EE5C7CC7A4E53B2A9D46A06FFF8309
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #76
+2025-08-14 06:33:16,087 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D2005C360022169CE9BF47EB0D5C2DBA062CA3F62150DF2EE5C7CC7A4E53B2A9D46A06FFF8309
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #77
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #78
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #79
+2025-08-14 06:33:16,087 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 06:33:16,087 - INFO - 📡 Processed telegram #80
+2025-08-14 06:34:11,350 - INFO - 
+⛔ Preprocessor stopped. Processed 80 telegrams.

@@ -1,7 +1,40 @@
 {
-  "capture_timestamp": "2025-08-13T16:58:21.282783",
-  "capture_duration": 20.088173,
-  "discovered_devices": [],
-  "total_frames": 0,
-  "frames": []
+  "capture_timestamp": "2025-08-14T04:14:54.889670",
+  "capture_duration": 21.267944,
+  "discovered_devices": [
+    {
+      "name": "VW1871-250111",
+      "address": "F0F41E39-111C-1E4B-018D-4363539FF186"
+    }
+  ],
+  "total_frames": 3,
+  "frames": [
+    {
+      "timestamp": "2025-08-14T04:14:54.407771",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff03-0000-1000-8000-00805f9b34fb",
+      "data_length": 2,
+      "raw_hex": "0107",
+      "raw_ascii": ".."
+    },
+    {
+      "timestamp": "2025-08-14T04:14:54.407982",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000ff03-0000-1000-8000-00805f9b34fb",
+      "data_length": 3,
+      "raw_hex": "02F400",
+      "raw_ascii": "..."
+    },
+    {
+      "timestamp": "2025-08-14T04:14:54.646856",
+      "device_name": "VW1871-250111",
+      "device_address": "F0F41E39-111C-1E4B-018D-4363539FF186",
+      "characteristic_uuid": "0000fec8-0000-1000-8000-00805f9b34fb",
+      "data_length": 26,
+      "raw_hex": "FE01001A271100010A0018848004200128023A06606E41E3185F",
+      "raw_ascii": "....'......... .(.:.`nA.._"
+    }
+  ]
 }

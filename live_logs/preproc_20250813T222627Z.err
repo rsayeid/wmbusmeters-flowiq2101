@@ -1,0 +1,13 @@
+2025-08-14 03:56:27,805 - INFO - 🔧 VW1871 Preprocessor started - converting telegrams for wmbusmeters
+2025-08-14 03:56:27,805 - INFO -    Input: VW1871 BLE bridge format
+2025-08-14 03:56:27,805 - INFO -    Output: wmbusmeters-compatible format
+2025-08-14 03:56:42,449 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 03:56:42,449 - INFO - 📡 Processed telegram #1
+2025-08-14 03:56:42,449 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 03:56:42,449 - INFO - 📡 Processed telegram #2
+2025-08-14 03:56:42,449 - WARNING - Heuristic failed to locate inner frame; passing through unmodified
+2025-08-14 03:56:42,449 - INFO - 📡 Processed telegram #3
+2025-08-14 03:56:42,449 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20BD10570221CEB5F76EDF308318EC1F9F7D6AA75765E7D89113346357F08BF023F204B18494
+2025-08-14 03:56:42,449 - INFO - 📡 Processed telegram #4
+2025-08-14 03:56:42,449 - INFO - Extracted wM-Bus frame (L=0x30): 30442D2C703749741F168D20BD10570221CEB5F76EDF308318EC1F9F7D6AA75765E7D89113346357F08BF023F204B18494
+2025-08-14 03:56:42,449 - INFO - 📡 Processed telegram #5
