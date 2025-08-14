@@ -6,7 +6,7 @@ wireless wm-bus meters.  The readings can then be published using
 MQTT, curled to a REST api, inserted into a database or stored in a
 log file.
 
-# What does it do?
+## What does it do?
 
 Wmbusmeters converts incoming telegrams from (w)mbus/OMS compatible meters like:
 `1844AE4C4455223368077A55000000_041389E20100023B0000`
@@ -18,6 +18,7 @@ or into csv:
 `MyTapWater;33225544;123.529;0;2024-03-03 19:36:45`
 
 or into json:
+
 ```json
 {
     "_":"telegram",
@@ -44,6 +45,7 @@ measurement mean? Is it last months final measurement that will be
 used for water billing? Is it the amount of gas delivered last year?
 The [drivers](https://github.com/wmbusmeters/wmbusmeters/tree/master/drivers/src)
 adds this knowledge, here is an example:
+
 ```
 field {
     name = target
@@ -80,12 +82,12 @@ dnf install wmbusmeters
 
 # Docker
 
-Experimental docker containers are available here: https://hub.docker.com/r/wmbusmeters/wmbusmeters
+Experimental docker containers are available here: <https://hub.docker.com/r/wmbusmeters/wmbusmeters>
 
 # Snap
 
-Experimental snaps are available here: https://snapcraft.io/wmbusmeters
-Read the wiki for more info on how to use the snap: https://wmbusmeters.github.io/wmbusmeters-wiki/SNAP.html
+Experimental snaps are available here: <https://snapcraft.io/wmbusmeters>
+Read the wiki for more info on how to use the snap: <https://wmbusmeters.github.io/wmbusmeters-wiki/SNAP.html>
 
 # Build from source and run as a daemon
 
@@ -118,7 +120,7 @@ which will probe all serial devices but only scans for im891a which also speeds 
 Note that the rtl-sdr devices are not found under the tty devices (e.g. `/dev/tty...`).
 Instead the rtl-sdr devices are accessed through character device special files named `/dev/swradio0` to `/dev/swradio255`[^kernel_docs_sdr]. Wmbusmeters uses librtsldr to probe these devices.
 
-[^kernel_docs_sdr]: https://docs.kernel.org/userspace-api/media/v4l/dev-sdr.html?highlight=sdr#software-defined-radio-interface-sdr
+[^kernel_docs_sdr]: <https://docs.kernel.org/userspace-api/media/v4l/dev-sdr.html?highlight=sdr#software-defined-radio-interface-sdr>
 
 If you have to scan serial devices, then remember that some Raspberry PIs are upset when
 random data is sent to `/dev/ttyAMA0` when it is configured in bluetooth mode.
@@ -167,22 +169,27 @@ device=/dev/ttyUSB1:rc1180:t1
 
 To poll an C2/T2/S2 wireless meter or an wired m-bus meter you need to give the (w)mbus device a bus-alias, for example
 here we pick the bus alias MAIN for the mbus using 2400 bps for all meters on this bus.
+
 ```
 MAIN=/dev/ttyUSB0:mbus:2400
 ```
+
 and here we pick the bus alias RADIOMAIN for an iu891a dongle:
+
 ```
 RADIOMAIN=/dev/ttyUSB1:iu891a:c2
 ```
 
 The bus alias is then used in the meter driver specification to specify which
 bus the mbus poll request should be sent to.
+
 ```
 wmbusmeters --pollinterval=60s MAIN=/dev/ttyUSB0:mbus:2400 MyTempMeter piigth:MAIN:mbus 12001932 NOKEY
 ```
 
 If you want to poll an mbus meter using the primary address, use p0 to p250 (deciman numbers)
 instead of the full 8 digit secondary address.
+
 ```
 wmbusmeters --pollinterval=60s MAIN=/dev/ttyUSB0:mbus:2400 MyTempMeter piigth:MAIN:mbus p0 NOKEY
 ```
@@ -230,13 +237,14 @@ driver=piigth:MAIN:mbus
 pollinterval=60s
 ```
 
-# Important information about meter drivers and their names.
+# Important information about meter drivers and their names
 
 You can use `driver=auto` to have wmbusmeters automatically detect
 and use the best driver for your meter, but you should >not< use auto in production.
 
 You can find out which driver is recommended by running `wmbusmeters iu891a:t1`.
 This will print information like:
+
 ```
 Received telegram from: 71727374
           manufacturer: (BMT) BMETERS, Italy (0x9b4)
@@ -299,6 +307,7 @@ up, then the formula will generate a null value. When two units are compatible
 it will automatically convert the value between two units.
 
 The formula
+
 ```ini
 calculate_sum_mj=5 kwh + 8 gj + (7 kw * 3 h)
 ```
@@ -315,6 +324,7 @@ a named unit (ie the calculated field must end with `_v`). The
 existing named units can be found with `wmbusmeters --listunits`.
 
 If you make a mistake in the formula you will get a warning:
+
 ```
 Warning! Ignoring calculated field sum because parse failed:
 Cannot add [kw|Power|1000kgm²s⁻³] to [gj|Energy|1×10⁹kgm²s⁻²]!
@@ -451,7 +461,7 @@ When running using config files then you can trigger a reload of the config file
 using `sudo killall -HUP wmbusmetersd` or `killall -HUP wmbusmeters`
 depending on if you are running as a daemon or not.
 
-# Running without config files, good for experimentation and test.
+# Running without config files, good for experimentation and test
 
 ```
 wmbusmeters version: 1.19.0
@@ -522,7 +532,7 @@ As device you can use:
 
 `auto:c1`, to have wmbusmeters probe for devices: im871a, iu891a, amb8465(metis), amb3665, cul, rc1180 or rtlsdr (spawns rtlwmbus).
 
-`iu891a:c1` to start all connected *iu891a* devices in *c1* mode, ignore all other devices.
+`iu891a:c1` to start all connected _iu891a_ devices in _c1_ mode, ignore all other devices.
 
 `/dev/ttyUSB1:amb8465:c1` to start only this device on this tty. Do not probe for other devices.
 
@@ -546,13 +556,14 @@ These telegrams are expected to have the data link layer crc bytes removed alrea
 for each attached rtlsdr dongle. This will listen to S1,T1 and C1 meters in parallel.
 
 For the moment, it is necessary to send the stderr to a file (/dev/null) because of a bug:
-https://github.com/osmocom/rtl-sdr/commit/142325a93c6ad70f851f43434acfdf75e12dfe03
+<https://github.com/osmocom/rtl-sdr/commit/142325a93c6ad70f851f43434acfdf75e12dfe03>
 
 Until this bug fix has propagated into Debian/Fedora etc, wmbusmeters uses a tmp file
 to see the stderr output from rtl_sdr. This tmp file is created in /tmp and will
 generate 420 bytes of data once ever 23 hours.
 
 The current command line used by wmbusmeters to start the rtl_wmbus pipeline is therefore a bit longer:
+
 ```
 ERRFILE=$(mktemp --suffix=_wmbusmeters_rtlsdr) ;
 echo ERRFILE=$ERRFILE ;  date -Iseconds > $ERRFILE ;
@@ -725,7 +736,7 @@ With the latest firmware version (0x15) im871a can
 also listen to c1 and t1 telegrams at the same time.
 (Use `--verbose` to see your dongles firmware version.)
 If you have the older firmware you can download the upgrader here:
-https://wireless-solutions.de/downloadfile/wireless-m-bus-software/
+<https://wireless-solutions.de/downloadfile/wireless-m-bus-software/>
 
 The wmbus dongle iu891a can listen to either s1, c1 or t1 or c1,t1 at the same time.
 
@@ -754,6 +765,7 @@ wmbusmeters auto:c1
 ```
 
 Listens for C1 telegrams using any of your available wmbus dongles:
+
 ```
 Received telegram from: 12345678
           manufacturer: (KAM) Kamstrup Energi (0x2c2d)
@@ -883,24 +895,29 @@ rtl_sdr -f 868.625M -s 1600000 - 2>/dev/null | rtl_wmbus -f -s | wmbusmeters --f
 ```
 
 Or you can send rtl_wmbus formatted telegrams using nc over UDP to wmbusmeters.
+
 ```shell
 rtl_sdr -f 868.95M -s 1600000 - 2>/dev/null | rtl_wmbus -f -p s -a | nc -u localhost 4444
 ```
 
 And receive the telegrams with nc spawned by wmbusmeters.
+
 ```shell
 wmbusmeters 'rtlwmbus:CMD(nc -lku 4444)'
 ```
 
 Or start nc explicitly in a pipe.
+
 ```shell
 nc -lku 4444 | wmbusmeters stdin:rtlwmbus
 ```
 
 Telegrams can also be pulled in by listening on MQTT topics if they were captured by other tools like [rtl_433](https://github.com/merbanan/rtl_433)
+
 ```shell
 wmbusmeters 'hex:CMD(/usr/bin/mosquitto_sub -h 192.168.x.x -t rtl_433/device/devices/6/Wireless-MBus/+/data | tr -d "\n" )'
 ```
+
 `+` is a wild card that listens to all the captured telegrams but can be replaced with a specific meter's ID
 
 # Decoding hex string telegrams
@@ -913,6 +930,7 @@ wmbusmeters 234433300602010014007a8e0000002f2f0efd3a1147000000008e40fd3a34120000
 ```
 
 which will output:
+
 ```
 No meters configured. Printing id:s of all telegrams heard!
 Received telegram from: 00010206
@@ -956,15 +974,16 @@ wmbusmeters --analyze 3E44A5119035246141047A1A0030052F2F#0C06026301000C136886090
 ```
 
 Fields marked with `C!` (and green background) are content that is understood and put to use in the json. For example:
+
 ```
 019 C!: 02630100 ("total_energy_consumption_kwh":16302)
 ```
+
 Which shows the telegram raw data bytes and the json field into which the decoded value was presented.
 Fields marked with `C?` (and red background) are content that is not understood nor used in the json.
 
 To force a driver use: `--analyze=<driver>` to supply a decryption key: `--analyze=<key>` and to do both:
 `--analyze=<key>:<driver>`
-
 
 You can run the analyze functionality online here: [wmbusmeters.org](https://wmbusmeters.org)
 
@@ -1083,7 +1102,7 @@ even more..... :-/
 
 # Good free documents on the wireless mbus protocol standard EN 13757
 
-https://oms-group.org/
+<https://oms-group.org/>
 
 There is also a lot of wmbus protocol implementation details that
 are missing. They will be added to the program as we figure out

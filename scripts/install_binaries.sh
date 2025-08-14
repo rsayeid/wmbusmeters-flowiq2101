@@ -1,11 +1,15 @@
 # Copyright (C) 2021-2023 Fredrik Öhrström (gpl-3.0-or-later)
 
-# Command binary /usr/bin/wmbusmeters
-wmbusmeters_dir="${ROOT}/usr/bin"
-wmbusmeters_path="${wmbusmeters_dir}/wmbusmeters"
 
-# Daemon /usr/sbin/wmbusmetersd which is a symlink to the command binary.
-wmbusmetersd_dir="${ROOT}/usr/sbin"
+# Detect macOS and set install paths accordingly
+if [[ "$(uname)" == "Darwin" ]]; then
+	wmbusmeters_dir="${ROOT}/usr/local/bin"
+	wmbusmetersd_dir="${ROOT}/usr/local/sbin"
+else
+	wmbusmeters_dir="${ROOT}/usr/bin"
+	wmbusmetersd_dir="${ROOT}/usr/sbin"
+fi
+wmbusmeters_path="${wmbusmeters_dir}/wmbusmeters"
 wmbusmetersd_path="${wmbusmetersd_dir}/wmbusmetersd"
 
 # Remove any existing installed components.

@@ -8,8 +8,8 @@ VW1871_DEVICE="VW1871-250111"
 VW1871_UUID="F0F41E39-111C-1E4B-018D-4363539FF186"
 
 # Virtual serial port setup
-VIRTUAL_PORT="/tmp/ttys001_master"
-VIRTUAL_LINK="/tmp/ttys001"
+VIRTUAL_PORT="/dev/ttys001"
+VIRTUAL_LINK="/dev/ttys002"
 
 echo "🎯 Bluetooth → Serial WM-Bus Bridge"
 echo "==================================="
