@@ -4,7 +4,7 @@
 # This script creates a direct connection to the VW1871 concentrator
 
 VW1871_DEV="/dev/cu.VW1871-250111"
-BRIDGE_PORT="/tmp/vw1871_bridge"
+BRIDGE_PORT="/dev/ttyvw1871_bridge"
 WMBUSMETERS_BIN="./build/wmbusmeters"
 
 echo "=== VW1871-250111 Bluetooth Bridge for FlowIQ2101 ==="
