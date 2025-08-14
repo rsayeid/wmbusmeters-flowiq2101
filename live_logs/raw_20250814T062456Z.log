@@ -1,0 +1,83 @@
+2025-08-14 11:54:57,093 - INFO - 🔍 Starting Bluetooth scan (timeout: 10.0s)
+2025-08-14 11:54:57,271 - INFO - 📡 Found target device by pattern 'VW.*': VW1871-250111
+2025-08-14 11:54:57,271 - INFO - 📱 Target device discovered: VW1871-250111 (F0F41E39-111C-1E4B-018D-4363539FF186)
+2025-08-14 11:54:57,271 - INFO - 📡 Found target device by pattern 'VW.*': VW1871-250111
+2025-08-14 11:54:57,272 - INFO - 📡 Found target device by pattern 'VW.*': VW1871-250111
+2025-08-14 11:55:07,187 - INFO - ✅ Scan complete. Found 1 target devices
+2025-08-14 11:55:07,188 - INFO - 🔗 Connecting to: VW1871-250111 (F0F41E39-111C-1E4B-018D-4363539FF186)
+2025-08-14 11:55:07,589 - INFO - ✅ Connected to F0F41E39-111C-1E4B-018D-4363539FF186
+2025-08-14 11:55:07,589 - INFO - 🔍 Discovering services for F0F41E39-111C-1E4B-018D-4363539FF186
+2025-08-14 11:55:07,589 - INFO -   📋 Service: 0000ff00-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,589 - INFO -     🔧 Characteristic: 0000ff02-0000-1000-8000-00805f9b34fb (Properties: ['write', 'write-without-response'])
+2025-08-14 11:55:07,589 - INFO -     🔧 Characteristic: 0000ff01-0000-1000-8000-00805f9b34fb (Properties: ['notify'])
+2025-08-14 11:55:07,589 - INFO - 📡 Setting up notifications for: 0000ff01-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,626 - INFO - ✅ Notifications started for 0000ff01-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,626 - INFO -     🔧 Characteristic: 0000ff03-0000-1000-8000-00805f9b34fb (Properties: ['notify'])
+2025-08-14 11:55:07,626 - INFO - 📡 Setting up notifications for: 0000ff03-0000-1000-8000-00805f9b34fb
+/Volumes/dev/space/wmblatest/wmbusmeters/bluetooth_wmbus_capture.py:159: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  ts = datetime.utcnow().isoformat()
+2025-08-14 11:55:07,629 - INFO - 📊 Frame captured from VW1871-250111: 72 bytes
+2025-08-14 11:55:07,629 - INFO -     Hex: 0D0A4261747465727920566F6C74203D2033393730206D560D...
+✓ Bleak library available
+🚀 Starting wM-Bus Bluetooth Capture
+==================================================
+🔧 wM-Bus Bluetooth Capture initialized
+📱 Device patterns: 9 (user added: 0)
+🔌 Service UUIDs: 4
+🌉 Bridge mode enabled: ALL notifications hex emitted (--print-all)
+
+📱 Found 1 target devices:
+   - VW1871-250111 (F0F41E39-111C-1E4B-018D-4363539FF186)
+
+🔗 Connecting to devices...
+0D0A4261747465727920566F6C74203D2033393730206D560D0AFBFCFCF0820FFEFE0E0F0D0A4261747465727920566F6C74203D2034303138206D560D0AFBFCFCF0B20FFEFE0E0F
+2025-08-14 11:55:07,688 - INFO - ✅ Notifications started for 0000ff03-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,688 - INFO -   📋 Service: 0000ff10-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,688 - INFO -     🔧 Characteristic: 0000ff11-0000-1000-8000-00805f9b34fb (Properties: ['notify', 'write-without-response'])
+2025-08-14 11:55:07,688 - INFO - 📡 Setting up notifications for: 0000ff11-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,689 - INFO - 📊 Frame captured from VW1871-250111: 2 bytes
+2025-08-14 11:55:07,689 - INFO -     Hex: 0107
+0107
+2025-08-14 11:55:07,690 - INFO - 📊 Frame captured from VW1871-250111: 3 bytes
+2025-08-14 11:55:07,690 - INFO -     Hex: 02F400
+02F400
+2025-08-14 11:55:07,747 - INFO - ✅ Notifications started for 0000ff11-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,747 - INFO -     🔧 Characteristic: 0000ff12-0000-1000-8000-00805f9b34fb (Properties: ['notify', 'write-without-response'])
+2025-08-14 11:55:07,747 - INFO - 📡 Setting up notifications for: 0000ff12-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,807 - INFO - ✅ Notifications started for 0000ff12-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,807 - INFO -   📋 Service: 000018f0-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,808 - INFO -     🔧 Characteristic: 00002af1-0000-1000-8000-00805f9b34fb (Properties: ['write', 'write-without-response'])
+2025-08-14 11:55:07,808 - INFO -     🔧 Characteristic: 00002af0-0000-1000-8000-00805f9b34fb (Properties: ['notify'])
+2025-08-14 11:55:07,808 - INFO - 📡 Setting up notifications for: 00002af0-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,867 - INFO - ✅ Notifications started for 00002af0-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,868 - INFO -   📋 Service: 0000fee7-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,868 - INFO -     🔧 Characteristic: 0000fec7-0000-1000-8000-00805f9b34fb (Properties: ['write'])
+2025-08-14 11:55:07,868 - INFO -     🔧 Characteristic: 0000fec8-0000-1000-8000-00805f9b34fb (Properties: ['indicate'])
+2025-08-14 11:55:07,868 - INFO - 📡 Setting up notifications for: 0000fec8-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,927 - INFO - ✅ Notifications started for 0000fec8-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,927 - INFO -     🔧 Characteristic: 0000fec9-0000-1000-8000-00805f9b34fb (Properties: ['read'])
+2025-08-14 11:55:07,928 - INFO -   📋 Service: 0000ff80-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,928 - INFO -     🔧 Characteristic: 0000ff82-0000-1000-8000-00805f9b34fb (Properties: ['write', 'write-without-response'])
+2025-08-14 11:55:07,928 - INFO -     🔧 Characteristic: 0000ff81-0000-1000-8000-00805f9b34fb (Properties: ['notify'])
+2025-08-14 11:55:07,928 - INFO - 📡 Setting up notifications for: 0000ff81-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,929 - INFO - 📊 Frame captured from VW1871-250111: 26 bytes
+2025-08-14 11:55:07,929 - INFO -     Hex: FE01001A271100010A0018848004200128023A06606E41E318...
+FE01001A271100010A0018848004200128023A06606E41E3185F
+2025-08-14 11:55:07,989 - INFO - ✅ Notifications started for 0000ff81-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,989 - INFO -   📋 Service: 0000fff0-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:07,989 - INFO -     🔧 Characteristic: 0000fff2-0000-1000-8000-00805f9b34fb (Properties: ['write', 'write-without-response'])
+2025-08-14 11:55:07,989 - INFO -     🔧 Characteristic: 0000fff1-0000-1000-8000-00805f9b34fb (Properties: ['indicate'])
+2025-08-14 11:55:07,989 - INFO - 📡 Setting up notifications for: 0000fff1-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:08,047 - INFO - ✅ Notifications started for 0000fff1-0000-1000-8000-00805f9b34fb
+2025-08-14 11:55:08,047 - INFO -   📋 Service: 49535343-fe7d-4ae5-8fa9-9fafd205e455
+2025-08-14 11:55:08,047 - INFO -     🔧 Characteristic: 49535343-6daa-4d02-abf6-19569aca69fe (Properties: ['write', 'read', 'write-without-response'])
+2025-08-14 11:55:08,047 - INFO -     🔧 Characteristic: 49535343-8841-43f4-a8d4-ecbe34729bb3 (Properties: ['write', 'write-without-response'])
+2025-08-14 11:55:08,047 - INFO -     🔧 Characteristic: 49535343-1e4d-4bd9-ba61-23c647249616 (Properties: ['notify'])
+2025-08-14 11:55:08,048 - INFO - 📡 Setting up notifications for: 49535343-1e4d-4bd9-ba61-23c647249616
+2025-08-14 11:55:08,107 - INFO - ✅ Notifications started for 49535343-1e4d-4bd9-ba61-23c647249616
+2025-08-14 11:55:08,107 - INFO -     🔧 Characteristic: 49535343-aca3-481c-91ec-d85e28a60318 (Properties: ['notify', 'write'])
+2025-08-14 11:55:08,107 - INFO - 📡 Setting up notifications for: 49535343-aca3-481c-91ec-d85e28a60318
+2025-08-14 11:55:08,170 - INFO - ✅ Notifications started for 49535343-aca3-481c-91ec-d85e28a60318
+2025-08-14 11:55:08,170 - INFO - ⏱️  Starting monitoring (infinite duration)
+2025-08-14 11:55:08,170 - INFO - 📡 Listening for wM-Bus telegrams...
+2025-08-14 11:55:38,206 - INFO - 📊 Status: 4 frames captured, 1 devices connected; elapsed=30s

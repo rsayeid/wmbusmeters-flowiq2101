@@ -1,0 +1,7 @@
+2025-08-14 11:54:57,050 - INFO - 🔧 VW1871 Frame Extractor started
+2025-08-14 11:54:57,050 - INFO -    Input: VW1871 Bluetooth notifications
+2025-08-14 11:54:57,050 - INFO -    Output: Clean WM-Bus frames for wmbusmeters
+2025-08-14 11:54:57,050 - INFO -    Rules: FlowIQ2101 frame variants (2025-08-14)
+2025-08-14 11:55:49,504 - INFO - 
+⛔ Extractor stopped.
+2025-08-14 11:55:49,504 - INFO - 📊 Summary: 0 notifications → 0 frames

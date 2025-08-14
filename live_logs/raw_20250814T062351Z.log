@@ -1,0 +1,26 @@
+2025-08-14 11:53:59,348 - INFO - 🔍 Starting Bluetooth scan (timeout: 10.0s)
+2025-08-14 11:54:09,440 - INFO - ✅ Scan complete. Found 0 target devices
+/Volumes/dev/space/wmblatest/wmbusmeters/bluetooth_wmbus_capture.py:242: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'capture_timestamp': datetime.utcnow().isoformat(),
+2025-08-14 11:54:09,443 - INFO - 💾 Results saved to wmbus_capture.json
+2025-08-14 11:54:09,444 - INFO - 📊 Total frames captured: 0
+2025-08-14 11:54:09,444 - INFO - ⚠️  No potential wM-Bus telegrams detected
+✓ Bleak library available
+🚀 Starting wM-Bus Bluetooth Capture
+==================================================
+🔧 wM-Bus Bluetooth Capture initialized
+📱 Device patterns: 9 (user added: 0)
+🔌 Service UUIDs: 4
+🌉 Bridge mode enabled: ALL notifications hex emitted (--print-all)
+❌ No target devices found
+
+💡 Tips:
+   - Ensure Bluetooth devices are powered and advertising
+   - Adjust --scan-time
+   - Add --pattern / --name-contains
+   - Enable --debug for verbose output
+
+📊 Capture Summary:
+   Devices found: 0
+   Devices connected: 0
+   Frames captured: 0
