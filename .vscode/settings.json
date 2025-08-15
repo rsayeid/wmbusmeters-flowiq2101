@@ -2,5 +2,7 @@
     "python-envs.defaultEnvManager": "ms-python.python:venv",
     "python-envs.pythonProjects": [],
     "idf.pythonInstallPath": "/opt/homebrew/bin/python3",
-    "idf.port": "/dev/tty.debug-console"
+    "idf.port": "/dev/tty.debug-console",
+    "idf.espIdfPath": "/Users/rsirohi/esp/esp-idf",
+    "idf.toolsPath": "/Users/rsirohi/.espressif"
 }

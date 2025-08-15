@@ -39,6 +39,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from typing import Optional, List
+import pytz
 
 try:
     from bleak import BleakScanner, BleakClient
@@ -46,6 +47,8 @@ try:
     BLEAK_AVAILABLE = True
 except ImportError:
     BLEAK_AVAILABLE = False
+
+IST = pytz.timezone('Asia/Kolkata')
 
 """
 Classic Bluetooth / serial functionality was added previously (pyserial / pybluez
@@ -64,8 +67,8 @@ def color(code: str, text: str) -> str:
     return f"\033[{code}m{text}\033[0m"
 
 def ts() -> str:
-    # Timezone-aware ISO UTC timestamp
-    return datetime.now(timezone.utc).isoformat()
+    # Timezone-aware ISO IST timestamp
+    return datetime.now(IST).isoformat()
 
 class InteractiveBLELogger:
     def __init__(self, args):
@@ -92,6 +95,8 @@ class InteractiveBLELogger:
         # RSSI tracking
         self.last_rssi = None
         self._rssi_task = None
+        # Binary data recording
+        self.record_binary = False
 
     async def scan_once(self, timeout: int) -> List[BLEDevice]:
         if self.args.debug:
@@ -188,15 +193,28 @@ class InteractiveBLELogger:
         print(color('36', f"[{ts()}] Discovering services & characteristics..."))
         sub_targets = []
         read_targets = []
+        rssi_char = None
         for svc in self.client.services:
             print(color('35', f" Service {svc.uuid}"))
             for char in svc.characteristics:
                 props = ','.join(char.properties)
                 print(f"   Char {char.uuid}  props=[{props}]  handle={char.handle}")
+                # Check for RSSI characteristic by common names or UUIDs
+                if 'rssi' in (char.description or '').lower() or str(char.uuid).lower().endswith('2a07'):
+                    rssi_char = char
                 if any(p in char.properties for p in ("notify", "indicate")):
                     sub_targets.append(char)
                 if self.args.read_all and 'read' in char.properties:
                     read_targets.append(char)
+        if rssi_char:
+            print(color('32', f"[{ts()}] RSSI characteristic found: {rssi_char.uuid} (handle={rssi_char.handle})"))
+            try:
+                data = await self.client.read_gatt_char(rssi_char.uuid)
+                rssi_val = int.from_bytes(data, byteorder='little', signed=True)
+                self.last_rssi = rssi_val
+                print(color('32', f"[{ts()}] Initial RSSI value: {rssi_val} dBm"))
+            except Exception as e:
+                print(color('31', f"[{ts()}] Failed to read RSSI characteristic: {e}"))
         if sub_targets:
             print(color('36', f"[{ts()}] Subscribing to {len(sub_targets)} characteristics..."))
             for char in sub_targets:
@@ -306,18 +324,22 @@ class InteractiveBLELogger:
         self.notification_count += 1
         hex_data = data.hex().upper()
         ascii_data = ''.join(chr(b) if 32 <= b <= 126 else '.' for b in data)
+        binary_data = data
+        rssi_display = f"{self.last_rssi}dBm" if self.last_rssi is not None else "NA"
         record = {
             'ts': ts(),
             'sender_handle': sender_handle,
             'length': len(data),
             'raw_hex': hex_data,
             'raw_ascii': ascii_data,
-            'rssi': self.last_rssi,
+            'rssi': rssi_display,
+            'raw_binary': binary_data.hex() if self.record_binary else None,
         }
-        rssi_display = f"{self.last_rssi}dBm" if self.last_rssi is not None else "NA"
         print(color('34', f"[{record['ts']}] NOTIF #{self.notification_count} handle={sender_handle} len={record['length']} RSSI={rssi_display}"))
         print(f"   HEX  {hex_data}")
         print(f"   ASCII {ascii_data}")
+        print(f"   BINARY {binary_data}")
+        print(f"   RSSI {rssi_display}")
         if self.log_file_handle:
             self.log_file_handle.write(json.dumps(record) + '\n')
 
@@ -331,6 +353,17 @@ class InteractiveBLELogger:
                 loop.add_signal_handler(sig, self._signal_stop)
             except NotImplementedError:
                 pass
+        # Prompt user for binary recording before device selection
+        while True:
+            resp = input(color('36', "Do you want to record binary data in the log file? (y/n): ")).strip().lower()
+            if resp in ('y', 'yes'):
+                self.record_binary = True
+                break
+            elif resp in ('n', 'no'):
+                self.record_binary = False
+                break
+            else:
+                print(color('31', "Please enter 'y' or 'n'."))
         self._open_log_file()
         # BLE path only
         if self.target_address_norm or self.name_contains:

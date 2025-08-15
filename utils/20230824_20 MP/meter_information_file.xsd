@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:annotation>
+	<xs:documentation xml:lang="en">
+		Distribution format for Kamstrup Encryption and Meter information.
+		Copyright 2010 Kamstrup A/S. All rights reserved.
+		Version 3.0 changes:
+		- ConsumptionType changed from enum to string
+		- DeviceType changed from enum to string
+		Version 2.0 changes:
+		- added: new element types (Device) and new DevicesInOrder 
+		- added: VendorId
+    		- added: Consumption type Electricity
+    		- removed: Key length constaint on encryption keys    
+	</xs:documentation>
+</xs:annotation>
+
+
+
+<!-- Definition of generic elements -->
+<xs:element name="SerialNo" type="xs:string"/>
+<xs:element name="VendorId" type="xs:string"/>
+
+<!-- Definition of simple elements, meter related-->
+<xs:element name="MeterNo" type="xs:string"/>
+<xs:element name="MeterName" type="xs:string"/>  <!-- MeterName: MC21, MC601 etc. -->
+<xs:element name="ConsumptionType" type="xs:string"/>
+<xs:element name="ConfigNo" type="xs:string"/>
+<xs:element name="ProgramNo" type="xs:string"/>
+<xs:element name="TypeNo" type="xs:string"/>
+
+<!-- Definition of simple elements, other devices -->
+<xs:element name="DeviceType" type="xs:string"/>
+<xs:element name="DeviceName" type="xs:string"/>
+
+<!-- Definition of simple elements, flowsensors -->
+<xs:element name="FlowSensorType" type="xs:string"/>
+<xs:element name="FlowSensorName" type="xs:string"/>
+  
+<!-- Encryption key elements -->
+<xs:element name="PK1"/>
+<xs:element name="PK2"/>
+<xs:element name="PK3"/>
+<xs:element name="DEK"/>
+<xs:element name="GPK1"/>
+<xs:element name="GPK2"/>
+<xs:element name="GPK3"/>
+<xs:element name="GPK4"/>
+<xs:element name="UFPW"/>
+
+<!-- Definition of attributes -->
+<xs:attribute name="orderid" type="xs:string"/>
+<!-- Definition of schemaVersion, must be stepped when xsd i changed -->
+<xs:attribute name="schemaVersion" type="xs:string"/>
+
+<!-- Defintion of complex elements -->
+<xs:element name="EncKeys">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="PK1" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="PK2" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="PK3" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="DEK" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="GPK1" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="GPK2" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="GPK3" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="GPK4" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+  <xs:element name="EncPasswords">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="UFPW" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<!-- Definition of the basic meter information model -->
+<xs:element name="Meter">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="MeterNo" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="SerialNo"/>
+			<xs:element ref="EncKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="MeterName"/>
+			<xs:element ref="ConsumptionType" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="ConfigNo"/>
+			<xs:element ref="ProgramNo"/>
+			<xs:element ref="TypeNo"/>
+			<xs:element ref="VendorId"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<!--Definition of the basic device information model (non-meters) -->
+<xs:element name="Device">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="DeviceType"/>
+			<xs:element ref="TypeNo"/>
+      			<xs:element ref="DeviceName"/>
+			<xs:element ref="SerialNo"/>
+			<xs:element ref="VendorId"/>
+			<xs:element ref="EncKeys" minOccurs="0" maxOccurs="1"/>      
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+  <!--Definition of the basic device information model (non-meters) -->
+  <xs:element name="FlowSensor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FlowSensorType"/>
+        <xs:element ref="TypeNo"/>
+        <xs:element ref="FlowSensorName"/>
+        <xs:element ref="SerialNo"/>
+        <xs:element ref="VendorId"/>
+        <xs:element ref="EncPasswords" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<!-- Definition of Meter list Information model -->
+<xs:element name="MetersInOrder">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="Meter" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="orderid" use="required"/>
+<!-- Version number, must always be step, if xsd is changed-->
+		<xs:attribute ref="schemaVersion" use="required" fixed="2.0"/>
+	</xs:complexType>
+</xs:element>
+
+<!-- Definition of Device list information model -->
+<xs:element name="DevicesInOrder">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="Device" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="orderid" use="required"/>		
+<!-- Version number, must always be step, if xsd is changed-->
+		<xs:attribute ref="schemaVersion" use="required" fixed="2.0"/>
+	</xs:complexType>
+</xs:element>
+
+  <!-- Definition of FlowSensor list information model -->
+  <xs:element name="FlowSensorsInOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FlowSensor" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute ref="orderid" use="required"/>
+      <!-- Version number, must always be step, if xsd is changed-->
+      <xs:attribute ref="schemaVersion" use="required" fixed="2.0"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

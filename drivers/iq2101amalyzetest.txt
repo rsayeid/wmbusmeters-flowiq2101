@@ -1,0 +1,97 @@
+./build/wmbusmeters --analyze=44E9112D06BD762EC2BFECE57E487C9B 30442D2C703749741F168D20FDA3600221BB523FE4559A09F7A502B2ED7CC23EFE4E41ACD72BD4806D2983A0CE2BA8280C
+Auto driver    : not found!
+Similar driver : multical21 12/12
+Using driver   : multical21 12/12
+000   : 2e length (46 bytes)
+001   : 44 dll-c (from meter SND_NR)
+002   : 2d2c dll-mfct (KAM)
+004   : 70374974 dll-id (74493770)
+008   : 1f dll-version
+009   : 16 dll-type (Cold water meter)
+010   : 8d ell-ci-field (ELL: Extended Link Layer II (8 Byte))
+011   : 20 ell-cc (slow_resp sync)
+012   : fd ell-acc
+013   : a3600221 sn (AES_CTR)
+017   : 44c4 payload crc (calculated 44c4 OK)
+019   : 78 tpl-ci-field (EN 13757-3 Application Layer (no tplh))
+020   : 02 dif (16 Bit Integer/Binary Instantaneous value)
+021   : FF vif (Manufacturer specific)
+022   : 20 vife (?)
+023 C!: 4100 ("status":"DRY") ("current_status":"DRY") ("time_dry":"4-7 days") ("time_reversed":"") ("time_leaking":"") ("time_bursting":"")
+025   : 04 dif (32 Bit Integer/Binary Instantaneous value)
+026   : 13 vif (Volume l)
+027 C!: D3220000 ("total_m3":8.915)
+031   : 44 dif (32 Bit Integer/Binary Instantaneous value storagenr=1)
+032   : 13 vif (Volume l)
+033 C!: 55210000 ("target_m3":8.533)
+037   : A1 dif (8 Bit Integer/Binary Minimum value)
+038   : 01 dife (subunit=0 tariff=0 storagenr=2)
+039   : 5B vif (Flow temperature °C)
+040 C!: 7F ("flow_temperature_c":127)
+041   : 81 dif (8 Bit Integer/Binary Instantaneous value)
+042   : 01 dife (subunit=0 tariff=0 storagenr=2)
+043   : E7 vif (External temperature °C)
+044   : FF combinable vif (MfctSpecific)
+045   : 0F combinable extension vife (None)
+046 C!: 21 ("external_temperature_c":33)
+
+{
+    "_":"telegram",
+    "media":"cold water",
+    "meter":"multical21",
+    "name":"",
+    "id":"74493770",
+    "external_temperature_c":33,
+    "flow_temperature_c":127,
+    "target_m3":8.533,
+    "total_m3":8.915,
+    "current_status":"DRY",
+    "status":"DRY",
+    "time_bursting":"",
+    "time_dry":"4-7 days",
+    "time_leaking":"",
+    "time_reversed":"",
+    "timestamp":"2025-08-15T18:39:46Z"
+
+
+./build/wmbusmeters --analyze=44E9112D06BD762EC2BFECE57E487C9B 25442D2C703749741F168D20FAA0600221274D02133A410EC22EEBA44BAB7B4E7D1C377D358A
+Auto driver    : not found!
+Similar driver : multical21 12/12
+Using driver   : multical21 12/12
+000   : 23 length (35 bytes)
+001   : 44 dll-c (from meter SND_NR)
+002   : 2d2c dll-mfct (KAM)
+004   : 70374974 dll-id (74493770)
+008   : 1f dll-version
+009   : 16 dll-type (Cold water meter)
+010   : 8d ell-ci-field (ELL: Extended Link Layer II (8 Byte))
+011   : 20 ell-cc (slow_resp sync)
+012   : fa ell-acc
+013   : a0600221 sn (AES_CTR)
+017   : 0c8c payload crc (calculated 0c8c OK)
+019   : 79 tpl-ci-field (EN 13757-3 Application Layer with Compact frame (no tplh))
+020   : eb61 format signature
+022   : 2d8f data crc
+024 C!: 4100 ("status":"DRY") ("current_status":"DRY") ("time_dry":"4-7 days") ("time_reversed":"") ("time_leaking":"") ("time_bursting":"")
+026 C!: D3220000 ("total_m3":8.915)
+030 C!: 55210000 ("target_m3":8.533)
+034 C!: 7F ("flow_temperature_c":127)
+035 C!: 21 ("external_temperature_c":33)
+
+{
+    "_":"telegram",
+    "media":"cold water",
+    "meter":"multical21",
+    "name":"",
+    "id":"74493770",
+    "external_temperature_c":33,
+    "flow_temperature_c":127,
+    "target_m3":8.533,
+    "total_m3":8.915,
+    "current_status":"DRY",
+    "status":"DRY",
+    "time_bursting":"",
+    "time_dry":"4-7 days",
+    "time_leaking":"",
+    "time_reversed":"",
+    "timestamp":"2025-08-15T18:39:31Z"
