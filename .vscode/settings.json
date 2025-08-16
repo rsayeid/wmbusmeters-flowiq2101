@@ -1,12 +1,4 @@
 {
     "python-envs.defaultEnvManager": "ms-python.python:venv",
-    "python-envs.pythonProjects": [],
-    "idf.pythonInstallPath": "/opt/homebrew/bin/python3",
-    "idf.port": "/dev/tty.VW1871-250111",
-    "idf.espIdfPath": "/Users/rsirohi/esp/esp-idf",
-    "idf.toolsPath": "/Users/rsirohi/.espressif",
-    "idf.openOcdConfigs": [
-        "interface/ftdi/esp_ftdi.cfg",
-        "target/esp32.cfg"
-    ]
+    "python-envs.pythonProjects": []
 }

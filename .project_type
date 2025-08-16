@@ -1,0 +1,3 @@
+# Project Type
+This is a C++ wmbusmeters project for smart meter reading.
+NOT an ESP-IDF/ESP32 project.
