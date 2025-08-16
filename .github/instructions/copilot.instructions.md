@@ -44,6 +44,7 @@ Before creating ANY new script, you MUST:
    - `*_capture.py` / `*_capture.sh` - Data capture scripts  
    - `*_analysis.sh` / `*_analysis.py` - Analysis and pattern scripts
    - `*_test.sh` / `*_test.py` - Testing and validation scripts
+   - `*_extractor.py` - Frame extraction and preprocessing scripts
    - `simulation_*.txt` - Simulation data files
    - `test_*.conf` - Configuration files
 
@@ -59,6 +60,7 @@ Before creating ANY new script, you MUST:
 - `flowiq_pattern_analysis.sh` - Pattern analysis
 - `validate_flowiq_pattern.sh` - Pattern validation
 - `vw1871_bridge.sh` - Native bridge alternative
+- `vw1871_frame_extractor.py` - **PRIMARY** frame extraction tool
 - `test_flowiq2101_integration.sh` - Integration testing
 
 ---
@@ -101,23 +103,29 @@ ps aux | grep -E "(bluetooth.*capture|wmbus|python.*bridge)" | grep -v grep
 
 ## 🎯 PROJECT-SPECIFIC PRIORITIES
 
-### 🔐 **FlowIQ2101 Key Information**
-- **Meter ID**: 74493770
-- **Manufacturer**: Kamstrup (2D2C)
-- **Key**: 44E9112D06BD762EC2BFECE57E487C9B
-- **Device**: VW1871-250111 Bluetooth concentrator
+### 🔐 **FlowIQ2101 Development Setup**
+- **Test Meter ID**: 74493770 (sample for development/testing only)
+- **Manufacturer**: Kamstrup (2D2C pattern in frames)
+- **Test Key**: 44E9112D06BD762EC2BFECE57E487C9B (for development meter only)
+- **Bluetooth Device**: VW1871-250111 concentrator (test setup)
+- **Frame Extraction**: `vw1871_frame_extractor.py` (PRIMARY tool)
+- **Production Scope**: System designed to read thousands of FlowIQ2101 meters
 
 ### 📊 **Pattern Analysis Focus**
-- **Transmission Pattern**: 7 compact + 1 full frame
-- **Compact Frames**: 37 bytes
-- **Full Frames**: 77+ bytes (VW1871 truncates to ~48 bytes)
-- **Access Number Cycle**: Modulo 8 pattern
+- **Transmission Pattern**: 7 compact + 1 full frame (FlowIQ2101 standard)
+- **Compact Frames**: 37 bytes (25442D2C pattern, 76 hex digits)
+- **Full Frames**: 77+ bytes (30442D2C pattern, 98 hex digits)
+- **Access Number Cycle**: Modulo 8 pattern (universal FlowIQ2101 behavior)
+- **Frame Extraction Rules**: Based on notification byte length (59/70/96/244 bytes)
+- **Scalability**: Framework supports multiple meters with different IDs/keys
 
 ### 🔧 **Technical Constraints**
 - **macOS**: Cannot use `auto:t1` - must specify device
 - **Virtual Environment**: Always use `.venv` for Python scripts
 - **C1 Mode**: Use for raw hex telegram capture
 - **T1 Mode**: Use for processed telegram data
+- **Frame Processing**: VW1871 → vw1871_frame_extractor.py → wmbusmeters
+- **Production Ready**: Framework designed for thousands of FlowIQ2101 meters
 
 ---
 
